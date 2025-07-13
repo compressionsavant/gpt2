@@ -1,0 +1,14 @@
+[project]
+name = "gpt2"
+version = "1.0"
+description = "a minimal gpt 2 implementation"
+readme = "README.md"
+requires-python = ">=3.13"
+dependencies = [
+    "einops>=0.8.1",
+    "huggingface-hub>=0.33.4",
+    "tensorboard>=2.19.0",
+    "torch>=2.7.1",
+    "torchaudio>=2.7.1",
+    "torchvision>=0.22.1",
+]
