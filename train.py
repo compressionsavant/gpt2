@@ -26,7 +26,7 @@ class DistributedDataLoader(IterableDataset):
         self.T = T
         self.rank = rank
         self.world_size = world_size
-        self.root = "fineweb10B"
+        self.root = "edu_fineweb10B"
         assert split in ["train", "val"]
         shards = os.listdir(self.root)
         shards = sorted([shard for shard in shards if split in shard])
