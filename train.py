@@ -46,6 +46,18 @@ class DistributedDataLoader(IterableDataset):
         t = np.load(filename).astype(np.int32)
         pt = torch.from_numpy(t).long()
         return pt
+    
+    def load_binary_shard(self, filename: str):
+        with open(filename, "rb") as f:
+            header = np.frombuffer(f.read(256 * 4), dtype=np.int32)
+            assert header[0] == 716202, "invalid magic number. did you load the correct file ?"
+            assert header[1] == 1, "invalid version number"
+            num_tokens = header[2]
+
+            tokens = np.frombuffer(f.read(), dtype=np.uint16)
+            assert len(tokens) == num_tokens, f"invalid number of tokens. expected {num_tokens} but got {len(tokens)}"
+            return tokens
+
 
     def __iter__(self):
         while True:
@@ -174,4 +186,5 @@ for step in range(max_steps):
         api.upload_file(path_or_fileobj="checkpoint.pth", path_in_repo=f"{folder}/checkpoint.pth", repo_id="compressionsavant/gpt2")
         os.remove("checkpoint.pth")
     dist.barrier()
+
 destroy_process_group()
