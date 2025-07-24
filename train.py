@@ -39,7 +39,7 @@ class DistributedDataLoader(IterableDataset):
 
     def reset(self):
         self.shard_pos = 0
-        self.tokens = self.load_shard(self.shards[self.shard_pos])
+        self.tokens = self.load_binary_shard(self.shards[self.shard_pos])
         self.pos = self.B * self.T * self.rank
     
     def load_shard(self, filename: str):
@@ -63,7 +63,7 @@ class DistributedDataLoader(IterableDataset):
         while True:
             if self.pos + (self.B * self.T * self.world_size + 1) > len(self.tokens):
                 self.shard_pos = (self.shard_pos + 1) % len(self.shards)
-                self.tokens = self.load_shard(self.shards[self.shard_pos])
+                self.tokens = self.load_binary_shard(self.shards[self.shard_pos])
                 self.pos = self.B * self.T * self.rank
             
             tok_buf = torch.tensor(self.tokens[self.pos : self.pos + self.B * self.T + 1])
