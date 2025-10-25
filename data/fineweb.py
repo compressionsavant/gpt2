@@ -1,3 +1,4 @@
+# pulls shards for training run
 import os
 from huggingface_hub import hf_hub_download
 

@@ -26,7 +26,7 @@ class DistributedDataLoader(IterableDataset):
         self.T = T
         self.rank = rank
         self.world_size = world_size
-        self.root = "edu_fineweb10B"
+        self.root = os.path.join("data", "edu_fineweb10B")
         assert split in ["train", "val"]
         shards = os.listdir(self.root)
         shards = sorted([shard for shard in shards if split in shard])
@@ -85,7 +85,8 @@ torch.cuda.set_device(device)
 master = ddp_rank == 0
 
 device_type = "cuda" if device.startswith("cuda") else "cpu"
-torch.set_float32_matmul_precision("high")
+torch.backends.cuda.matmul.allow_tf32 = True
+torch.backends.cudnn.allow_tf32 = True
 torch.manual_seed(42)
 torch.cuda.manual_seed(42)
 

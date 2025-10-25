@@ -95,7 +95,7 @@ class GPT(nn.Module):
                 module.weight.data *= self.residual_scale
 
 
-    def forward(self, idx: torch.tensor, targets=None):
+    def forward(self, idx: torch.tensor, targets=None, return_logits=False):
         B, T = idx.shape
         pos = torch.arange(0, T, device=idx.device)
         pos_emb = self.transformer.wpe(pos)
@@ -109,6 +109,9 @@ class GPT(nn.Module):
         if targets is not None:
             logits = self.lm_head(x)
             loss = F.cross_entropy(logits.view(-1, logits.size(-1)), targets.view(-1), ignore_index=-1)
+        elif return_logits:
+            logits = self.lm_head(x)
+            loss = None
         else:
             logits = self.lm_head(x[:, [-1], :])
             loss = None
