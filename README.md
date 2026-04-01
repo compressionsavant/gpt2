@@ -2,7 +2,7 @@
 A minimal GPT-2(124M) reproduction with GPT-3 Hyperparams trained on 10B token of [FineWeb-Edu](https://huggingface.co/datasets/HuggingFaceFW/fineweb-edu)
 
 ## Architecture
-Following GPT-2 Architecture with extended vocab_size(50257 -> 50304) for training efficency. Later sliced back for compability
+Following GPT-2 Architecture with extended vocab_size(50257 -> 50304) for training efficency. Later sliced back for compatibility
 
 ## Training
 Trained with DDP on 8xH100s
