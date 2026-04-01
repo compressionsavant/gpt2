@@ -70,7 +70,7 @@ class HellaswagDataset:
     def create_all_datasets(cls):
         instance = cls()
         datasets = {}
-        for split in cls.remote.keys():
+        for split in instance.remote.keys():
             datasets[split] = instance.create_dataset(split)
         return DatasetDict(datasets)
 
