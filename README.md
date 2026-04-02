@@ -30,7 +30,7 @@ Checkpoints are saved to [compressionsavant/gpt2](https://huggingface.co/compres
 Tokenized shards are stored in a custom binary format (very similar to llm.c). To generate shards from FineWeb-Edu:
  
 ```bash
-python data/fineweb_edu.py --token_size 10 --path /path/to/storage
+PYTHONPATH="." uv run data/fineweb_edu.py --token_size 10 --path /path/to/storage
 ```
 
 ## Evaluation
@@ -46,7 +46,7 @@ PYTHONPATH="." uv run eval/mmlu.py
 Export last Checkpoint to GPT2LMHeadModel format:
  
 ```bash
-PYTHONPATH="." uv build.py
+PYTHONPATH="." uv run build.py
 ```
 
 ```python
